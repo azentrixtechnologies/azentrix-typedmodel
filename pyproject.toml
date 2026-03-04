@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=65.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "azentrix-typedmodel"
+version = "0.1.0"
+description = "Strict nested typed data modeling framework built on Pydantic"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [{name="Azentrix Technologies"}]
+
+dependencies = [
+    "pydantic>=2.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "mypy",
+    "ruff",
+    "black"
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
