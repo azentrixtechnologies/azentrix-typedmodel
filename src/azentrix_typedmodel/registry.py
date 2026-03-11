@@ -13,12 +13,8 @@ class ModelRegistry:
 
         name = model.__name__
 
-        if name in self._models:
-            raise ModelRegistrationError(
-                f"Model '{name}' is already registered"
-            )
-
-        self._models[name] = model
+        if name not in self._models:
+            self._models[name] = model
 
     def get(self, name: str) -> Type[BaseModel]:
 
@@ -35,8 +31,10 @@ class ModelRegistry:
         return name in self._models
 
     def list_models(self):
-
         return list(self._models.keys())
+
+    def clear(self):
+        self._models.clear()
 
 
 registry = ModelRegistry()
