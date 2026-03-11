@@ -2,7 +2,7 @@ import pytest
 from datetime import datetime
 from enum import Enum
 
-from azentrix_typedmodel.base import StrictBaseModel
+from TypedModel.base import StrictBaseModel
 
 
 class Status(Enum):

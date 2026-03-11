@@ -1,8 +1,8 @@
 from datetime import datetime
 from enum import Enum
-from azentrix_typedmodel.typing.primitives import IntegerModel
-from azentrix_typedmodel.nested.builder import NestedBuilder
-from azentrix_typedmodel.typing.primitives import (
+from TypedModel.typing.primitives import IntegerModel
+from TypedModel.nested.builder import NestedBuilder
+from TypedModel.typing.primitives import (
     StringModel,
     IntegerModel,
     BooleanModel,
@@ -55,7 +55,7 @@ def test_nested_numeric_list():
     model = NestedBuilder.build(data)
 
 
-    assert isinstance(model.numbers[0], IntegerModel)
+    assert isinstance(model.numbers, IntegerListModel)
 
 
 def test_nested_string_list():
@@ -127,5 +127,5 @@ def test_nested_mixed_structure():
     model = NestedBuilder.build(data)
 
     assert isinstance(model.user.name, StringModel)
-    assert isinstance(model.user.scores[0], IntegerModel)
+    assert isinstance(model.user.scores, IntegerListModel)
     assert isinstance(model.active, BooleanModel)

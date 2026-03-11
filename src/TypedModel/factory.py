@@ -57,6 +57,10 @@ class TypedFactory:
 
         if isinstance(value, dict):
             return cls._handle_dict(value)
+        
+        if isinstance(value, set):
+            value = list(value)
+            return cls._handle_list(value)
 
         return value
         

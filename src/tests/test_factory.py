@@ -1,8 +1,8 @@
 from datetime import datetime
 from enum import Enum
 
-from azentrix_typedmodel.factory import TypedFactory
-from azentrix_typedmodel.typing.primitives import (
+from TypedModel.factory import TypedFactory
+from TypedModel.typing.primitives import (
     StringModel,
     IntegerModel,
     FloatModel,
@@ -16,9 +16,9 @@ from azentrix_typedmodel.typing.primitives import (
     FloatTupleModel
 )
 from pydantic import BaseModel
-from azentrix_typedmodel.factory import TypedFactory
-from azentrix_typedmodel.registry import registry
-from azentrix_typedmodel.typing.primitives import StringModel, IntegerModel
+from TypedModel.factory import TypedFactory
+from TypedModel.registry import registry
+from TypedModel.typing.primitives import StringModel, IntegerModel
 
 
 class Color(Enum):
@@ -164,7 +164,7 @@ def test_handle_dict_unregistered_model():
     }
 
     import pytest
-    from azentrix_typedmodel.exceptions import InvalidInputType
+    from TypedModel.exceptions import InvalidInputType
 
     with pytest.raises(InvalidInputType):
         TypedFactory.create(data)

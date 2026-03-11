@@ -3,7 +3,7 @@ requires = ["setuptools>=65.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "azentrix-typedmodel"
+name = "TypedModel"
 version = "0.1.0"
 description = "Strict nested typed data modeling framework built on Pydantic"
 readme = "README.md"

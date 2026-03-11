@@ -13,7 +13,7 @@ class NestedBuilder:
             return cls._build_dict(data)
 
         if isinstance(data, list):
-            return cls._build_list(data)
+            return TypedFactory.create(data)
 
         if isinstance(data, tuple):
             return cls._build_tuple(data)
