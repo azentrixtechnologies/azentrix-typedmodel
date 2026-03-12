@@ -1,10 +1,10 @@
-from typing import Any, Dict
-
-from ..factory import TypedFactory
-from ..base import StrictBaseModel
+from typing import Any, Dict, Tuple
+from pydantic import create_model
 
 
 class NestedBuilder:
+
+    _model_cache: Dict[Tuple, type] = {}
 
     @classmethod
     def build(cls, data: Any):
@@ -13,47 +13,30 @@ class NestedBuilder:
             return cls._build_dict(data)
 
         if isinstance(data, list):
-            return TypedFactory.create(data)
+            return [cls.build(v) for v in data]
 
         if isinstance(data, tuple):
-            return cls._build_tuple(data)
+            return tuple(cls.build(v) for v in data)
 
-        return TypedFactory.create(data)
+        return data
+
 
     @classmethod
     def _build_dict(cls, data: Dict[str, Any]):
 
-        fields = {}
+        processed = {k: cls.build(v) for k, v in data.items()}
 
-        for key, value in data.items():
-            fields[key] = cls.build(value)
+        signature = tuple(sorted((k, type(v)) for k, v in processed.items()))
 
-        from pydantic import create_model
+        if signature not in cls._model_cache:
 
-        DynamicNestedModel = create_model(
-            "DynamicNestedModel",
-            __base__=StrictBaseModel,
-            **{k: (type(v), ...) for k, v in fields.items()}
-        )
+            model = create_model(
+                "DynamicNestedModel",
+                **{k: (type(v), ...) for k, v in processed.items()}
+            )
 
-        return DynamicNestedModel(**fields)
+            cls._model_cache[signature] = model
 
-    @classmethod
-    def _build_list(cls, data):
+        Model = cls._model_cache[signature]
 
-        items = []
-
-        for value in data:
-            items.append(cls.build(value))
-
-        return items
-
-    @classmethod
-    def _build_tuple(cls, data):
-
-        items = []
-
-        for value in data:
-            items.append(cls.build(value))
-
-        return tuple(items)
+        return Model(**processed)

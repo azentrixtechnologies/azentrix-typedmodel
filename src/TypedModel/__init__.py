@@ -8,13 +8,16 @@ from .validators import TypedValidator
 from .nested.builder import NestedBuilder
 from .nested.composer import NestedComposer
 
+
 def typed_model(data):
     if isinstance(data, dict):
         return NestedBuilder.build(data)
     return TypedFactory.create(data)
 
+
 __all__ = [
     "__version__",
+    "typed_model",
     "StrictBaseModel",
     "TypedFactory",
     "TypedValidator",
