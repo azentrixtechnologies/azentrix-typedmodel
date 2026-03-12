@@ -13,6 +13,10 @@ class NestedBuilder:
             return cls._build_dict(data)
 
         if isinstance(data, list):
+
+            if all(isinstance(i, dict) for i in data):
+                return [cls._build_dict(i) for i in data]
+
             return [cls.build(v) for v in data]
 
         if isinstance(data, tuple):
@@ -31,7 +35,7 @@ class NestedBuilder:
         if signature not in cls._model_cache:
 
             model = create_model(
-                "DynamicNestedModel",
+                "DictType",
                 **{k: (type(v), ...) for k, v in processed.items()}
             )
 
